@@ -71,12 +71,13 @@ Example Request Body:
 }
 ```
 <br>
+
 ### DELETE /employee/${id}
 Delete an employee.<br>
 Returns a HTTP 500 response if the employee you are trying to delete doesn't exists.
 ##### Endpoint Details
-HTTP Method: POST<br>
-Endpoint: /employee/${id}<br>
+HTTP Method: `DELETE`<br>
+Endpoint: `/employee/${id}`<br>
 <br>
 
 ## Tech Stack
