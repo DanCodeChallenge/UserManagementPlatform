@@ -56,13 +56,13 @@ public class EmployeeServiceTest {
         Employee employee = new Employee("name", "test", 2, BigInteger.TEN);
         when(employeeRepository.findById(testId)).thenReturn(Optional.of(employee));
 
-        employeeService.update(testId, "name2", "test2", 2, BigInteger.TEN);
+        employeeService.update(testId, mock(Employee.class));
     }
 
     @Test(expected = EmployeeNotFoundException.class)
     public void shouldThrowErrorWhenUpdateFailsWhenEmployeeIsNotInDatabase() {
         long testId = Long.MAX_VALUE;
-        employeeService.update(testId, "n", "t", 0, BigInteger.ONE);
+        employeeService.update(testId, mock(Employee.class));
     }
 
     @Test

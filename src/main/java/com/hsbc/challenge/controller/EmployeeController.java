@@ -34,12 +34,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/employee/{id}")
-    public ResponseEntity<?> updateEmployee(@PathVariable @NotNull Long id,
-                                            @RequestParam String name,
-                                            @RequestParam String surname,
-                                            @RequestParam Integer grade,
-                                            @RequestParam BigInteger salary) {
-        employeeService.update(id, name, surname, grade, salary);
+    public ResponseEntity<?> updateEmployee(@PathVariable @NotNull Long id, @RequestBody Employee employee) {
+        employeeService.update(id, employee);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

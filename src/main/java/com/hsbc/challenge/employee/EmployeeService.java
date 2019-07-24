@@ -33,18 +33,24 @@ public class EmployeeService {
         employeeRepo.save(employee);
     }
 
-    public void update(Long id, String name, String surname, Integer grade, BigInteger salary) {
-        Optional<Employee> employeeToUpdate = employeeRepo.findById(id);
-        if (employeeToUpdate.isPresent()) {
-            Employee employee = employeeToUpdate.get();
-            employee.setName(name);
-            employee.setSurname(surname);
-            employee.setGrade(grade);
-            employee.setSalary(salary);
-            save(employee);
+    public void update(Long id, Employee employee) {
+        Optional<Employee> employeeOpt = employeeRepo.findById(id);
+        if (employeeOpt.isPresent()) {
+            Employee employeeToUpdate = employeeOpt.get();
+            employeeToUpdate.setName(getNewProperty(employeeToUpdate.getName(), employee.getName()));
+            employeeToUpdate.setSurname(getNewProperty(employeeToUpdate.getSurname(), employee.getSurname()));
+            Integer newGrade = employee.getGrade() == null ? employeeToUpdate.getGrade() : employee.getGrade();
+            employeeToUpdate.setGrade(newGrade);
+            BigInteger newSalary = employee.getSalary() == null ? employeeToUpdate.getSalary() : employee.getSalary();
+            employeeToUpdate.setSalary(newSalary);
+            save(employeeToUpdate);
         } else {
             throw new EmployeeNotFoundException(id);
         }
+    }
+
+    private String getNewProperty(String currentProperty, String updatedProperty) {
+        return updatedProperty == null ? currentProperty : updatedProperty;
     }
 
     public void deleteById(Long id) {

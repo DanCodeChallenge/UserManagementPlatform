@@ -1,69 +1,94 @@
-## API documentation
-Responses to queries are in JSON format.
+## How to run
+1. Need gradle installed, if gradle is not installed used the gradle wrapper
+2. run command `gradle bootRun`<br>
+Note: by default it runs on http://localhost:8080/
 
+## API documentation
+This API responds in JSON format and accepts Request Bodies in JSON format.<br>
+The API is case sensitive.<br>
+<br>
 
 ### GET /employee/${id}
-Searches for an employee using his/her ID.
+Searches for an employee using his/her ID.<br>
 If the employee can't be found it will return a HTTP 404 Not Found response
-#### Endpoint Details
-HTTP Method: PUT
-Endpoint: /employee/${id}
+##### Endpoint Details
+HTTP Method: `GET`<br>
+Endpoint: `/employee/${id}`<br>
+<br>
 
-
-### GET /employee?name=${name}&surname=${surname}&grade=${grade}&salary=${salary}
-Searches for employees with the supplied properties
-#### Endpoint Details
-HTTP Method: GET
-Endpoint Examples:
-/employee?name=Dan&surname=Y&grade=5&salary=1000
-/employee?name=Dan
-/employee?surname=Y
-
-
-### PUT /employee/${id}
-If id exists it will update an existing employee.
-If the id doesn't exist it will return a HTTP 404 response
-#### Endpoint Details
-HTTP Method: PUT
-Endpoint: /employee/${id}
-Request Body Parameters:
-name : String
-surname : String
-grade : Integer
-salary : Integer
-
+### GET /employee?name=${name}&surname=${surname}&grade=${grade}&salary=${salary}&page=${pageNumber}
+Searches for employees with the supplied properties.
+##### Endpoint Details
+HTTP Method: `GET`<br>
+Endpoint Examples:<br>
+`/employee?name=Dan&surname=Y&grade=5&salary=1000&page=0`<br>
+`/employee?name=Dan&page=1`<br>
+`/employee?surname=Y`<br>
+`/employee?surname=Bale&grade=4`<br>
+<br>
 
 ### POST /employee
-Creates a new employee
-If validation on the input fails it will return a HTTP 500 response
-#### Endpoint Details
-HTTP Method: POST
-Endpoint: /employee
-Request Body Parameters:
-name : String
-surname : String
-grade : Integer
-salary : Integer
+Creates a new employee<br>
+If validation on the input fails it will return a HTTP 400 response,
+##### Endpoint Details
+HTTP Method: `POST`<br>
+Endpoint: `/employee`<br>
+Request Body JSON Parameters:<br>
+`name : String`<br>
+`surname : String`<br>
+`grade : Integer`<br>
+`salary : Integer`<br>
+Example Request Body:<br>
+```
+{
+  "name": "Jack",
+  "surname": "Bale",
+  "grade": 5,
+  "salary": 55000
+}
+```
+Note: The request needs to have all four properties, otherwise an HTTP 500 response is returned and the request is not processed.<br>
+<br>
 
-
+### PUT /employee/${id}
+If id exists it will update an existing employee.<br>
+If the id doesn't exist it will return a HTTP 404 response.
+##### Endpoint Details
+HTTP Method: `PUT`<br>
+Endpoint: `/employee/${id}`<br>
+Request Body JSON Parameters:<br>
+`name : String`<br>
+`surname : String`<br>
+`grade : Integer`<br>
+`salary : Integer`<br>
+Example Request Body:
+```
+{
+  "name": "Daniel",
+  "surname": "A",
+  "grade": "1",
+  "salary": "15000"
+}
+```
+<br>
 ### DELETE /employee/${id}
-Delete a employee
-Does nothing if the employee doesn't exists
-#### Endpoint Details
-HTTP Method: POST
-Endpoint: /employee/${id}
-
+Delete an employee.<br>
+Returns a HTTP 500 response if the employee you are trying to delete doesn't exists.
+##### Endpoint Details
+HTTP Method: POST<br>
+Endpoint: /employee/${id}<br>
+<br>
 
 ## Tech Stack
-Java 8
-Spring Boot
-Spring Data
-Spring MVC
+Java 8<br>
+Spring Boot<br>
+Spring Data<br>
+Spring MVC<br>
 H2 in-memory database
 
 
 ## Challenge Assumptions
-Due to the nature of this challenge I had to make some assumptions.
+Due to the nature of this challenge I had to make some assumptions.<br>
 If this was a work task, I would reach out to my colleagues to clarify these assumptions.
 
 ### Assumptions:

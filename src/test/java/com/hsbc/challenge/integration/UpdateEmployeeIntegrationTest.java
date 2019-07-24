@@ -32,7 +32,9 @@ public class UpdateEmployeeIntegrationTest extends BaseEmployeeIntegrationTest {
         employeeToUpdate.setGrade(updatedGrade);
 
         long employeeIdToUpdate = employeeToUpdate.getId();
-        ResponseEntity<String> response = sendToUpdateEndpoint(employeeToUpdate, employeeIdToUpdate);
+        Employee employeeNewDetails = new Employee(updatedName, null, updatedGrade, null);
+
+        ResponseEntity<String> response = sendToUpdateEndpoint(employeeNewDetails, employeeIdToUpdate);
 
         assertThat(employeeRepo.findById(employeeIdToUpdate).get()).isEqualToComparingFieldByField(employeeToUpdate);
         assertEquals(200, response.getStatusCodeValue());
@@ -52,12 +54,7 @@ public class UpdateEmployeeIntegrationTest extends BaseEmployeeIntegrationTest {
     }
 
     private ResponseEntity<String> sendToUpdateEndpoint(Employee employee, Long id) {
-        MultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-        map.add("name", employee.getName());
-        map.add("surname", employee.getSurname());
-        map.add("grade", employee.getGrade());
-        map.add("salary", employee.getSalary());
-        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(map, headers);
+        HttpEntity<Employee> entity = new HttpEntity<>(employee, headers);
 
         return restTemplate.exchange(
                 createURLForEndpoint("//employee/" + id),

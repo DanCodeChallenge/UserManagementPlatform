@@ -44,7 +44,7 @@ public class EmployeeControllerTest {
 
     @Test
     public void shouldReturnOKResponseWhenUpdatingEmployee() {
-        ResponseEntity<?> responseEntity = employeeController.updateEmployee(3L, "name", "surname", 1, BigInteger.ONE);
+        ResponseEntity<?> responseEntity = employeeController.updateEmployee(3L, mock(Employee.class));
         assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
